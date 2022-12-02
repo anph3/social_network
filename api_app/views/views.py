@@ -24,4 +24,6 @@ from helpers.response import *
 from ..validations.auth_validate import *
 #               serializers
 from ..serializers.user_serializer import *
+#               paginations
+from ..paginations import *
 # =============== end include  ===============

@@ -4,7 +4,7 @@ class AuthView(ViewSet):
     # ham dang nhap
     def login(self, request):
         data = request.data.copy()
-        
+
         # check input request
         validate = LoginValidate(data=data)
         if not validate.is_valid():
@@ -34,6 +34,15 @@ class AuthView(ViewSet):
             'access_token': a_token,
             'refresh_token':r_token  
         }, message=SUCCESS['login'])
+
+    # ham create user or register
+    def register(self, request):
+        data = request.data.copy()
+        data_save = UserSerializer(data=data)
+        if not data_save.is_valid():
+            return validate_error(data_save.errors)
+        data_save.save()
+        return response_data(data_save.data)
         
     # ham lam moi session
     def refresh_token(self, request):
@@ -61,13 +70,20 @@ class AuthView(ViewSet):
             'refresh_token':r_token  
         }, message=SUCCESS['refresh_token'])
         
+    # ham dang xuat
+    def logout(self, request):
+        a_token = request.headers.get("Authorization").replace(TOKEN['type'], '')
+        r_token = cache.get(a_token)
+        self.delete_token(a_token, r_token)
+        return response_data()
+        
     
     # duoi day la ham not request
     def hash_password(self, s):
         byte_pwd = s.encode('utf-8')
         my_salt = bcrypt.gensalt()
         pwd_hash = bcrypt.hashpw(byte_pwd, my_salt)
-        return str(pwd_hash)
+        return pwd_hash
     
     def check_passwork(self, password, b_password):
         return bcrypt.checkpw(password.encode('utf-8'), b_password.encode('utf-8'))
@@ -98,8 +114,8 @@ class AuthView(ViewSet):
         cache.delete(r_token)
     
     def get_data_token(self, request):
-        data = request.data.copy()
-        a = cache.get(data['access_token'])
+        data = request.headers.get("Authorization").replace(TOKEN['type'], '')
+        a = cache.get(data)
         b = cache.get(a)
         return response_data({
             'a':a,

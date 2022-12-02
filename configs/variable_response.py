@@ -14,7 +14,13 @@ ERROR = {
     'refresh_token':'refresh_token is not exists.',
     'not_login':'Not logged in, token is null.',
     'token_not_exists':'Token is not exists.',
-    'access_token':'Token fails, you can refresh token.'
+    'access_token':'Token fails, you can refresh token.',
+    'user_exists': {
+        'Username or email':'tai khoan da ton tai'
+    },
+    'user_exists_deleted': {
+        'Username or email':'Tai khoan da ton tai, hay doi trang thai tai khoan'
+    },
 }
 
 SUCCESS = {

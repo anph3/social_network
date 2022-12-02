@@ -32,5 +32,5 @@ def validate_error(data={}, status=STATUS['INPUT_INVALID']):
     data = dict(data)
     error_message = ''
     for key, value in data.items():
-        error_message += str(key) + ' ' + str(list(value)[0])
+        error_message += str(key) + ' ' + str(list(value)[0]) + '<br/>'
     return response_data(status=status, message=error_message)
