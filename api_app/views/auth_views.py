@@ -1,15 +1,4 @@
-from rest_framework.viewsets import ViewSet
-from helpers.response import *
-from ..validations.auth_validate import *
-import jwt
-from configs.variable_response import *
-from django.db.models import Q
-from configs.variable_system import *
-import bcrypt
-from django.core.cache import cache
-from datetime import datetime
-import uuid
-from ..serializers.user_serializer import *
+from .views import *
 
 class AuthView(ViewSet):
     # ham dang nhap

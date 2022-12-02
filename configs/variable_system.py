@@ -3,11 +3,6 @@ KEY_RSA = 'duanfpro'
 U = 'username'
 P = 'password'
 
-MIDDLEWARE_NOT_APPLY = [
-    '/login',
-    '/refresh-token'
-]
-
 TOKEN = {
     'private_key':'anphMNcZkh',
     'public_key':'fnEcdMHkm',

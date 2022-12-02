@@ -13,7 +13,8 @@ ERROR = {
     'not_exists': ' is not exists.',
     'refresh_token':'refresh_token is not exists.',
     'not_login':'Not logged in, token is null.',
-    'token_not_exists':'Token is not exists'
+    'token_not_exists':'Token is not exists.',
+    'access_token':'Token fails, you can refresh token.'
 }
 
 SUCCESS = {
