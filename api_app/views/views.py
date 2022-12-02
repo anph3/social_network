@@ -22,6 +22,7 @@ from configs.variable_system import *
 from helpers.response import *
 #               validations
 from ..validations.auth_validate import *
+from ..validations.user_validate import *
 #               serializers
 from ..serializers.user_serializer import *
 #               paginations

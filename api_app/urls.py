@@ -14,8 +14,11 @@ all_url = {
         path('logout', AuthView.as_view({'post':'logout'})),
     ],
     'url_user':[
-        path('all-user/<int:id>', UserView.as_view({'get':'all_user'})),
+        path('all-user', UserView.as_view({'get':'all_user'})),
+        path('get-user/<int:id>', UserView.as_view({'get':'get_user'})),
         path('add-user', AuthView.as_view({'post':'register'})),
+        path('edit-user/<int:id>', UserView.as_view({'put':'edit_user'})),
+        path('delete-user/<int:id>', UserView.as_view({'delete':'delete_user'})),
     ]
 }
 

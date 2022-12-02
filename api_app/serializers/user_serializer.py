@@ -23,11 +23,12 @@ class UserSerializer(serializers.ModelSerializer, ActionSerializer):
     
     # ============================== validate save ============================
     def validate(self, value):
-        user = User.objects.filter(Q(username=value['username']) | Q(email=value['email']))
-        if user.exclude(deleted_at__isnull=True).exists():
-            raise serializers.ValidationError(ERROR['user_exists_deleted'])
-        if user.filter(deleted_at__isnull=True).exists():
-            raise serializers.ValidationError(ERROR['user_exists'])
+        if 'username' in value and 'email' in value:
+            user = User.objects.filter(Q(username=value['username']) | Q(email=value['email']))
+            if user.exclude(deleted_at__isnull=True).exists():
+                raise serializers.ValidationError(ERROR['user_exists_deleted'])
+            if user.filter(deleted_at__isnull=True).exists():
+                raise serializers.ValidationError(ERROR['user_exists'])
         return value
     
     def validate_password(self, value):
