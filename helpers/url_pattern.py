@@ -1,5 +1,7 @@
-def get_urls(list_url):
-    new_list = []
-    for item in list_url:
-        new_list.append('/' + str(item.pattern))
-    return new_list
+from api_app import urls
+
+def get_list_url(value):
+    list_url = []
+    for item in urls.all_url[value]:
+        list_url.append('/'+str(item.pattern))
+    return list_url

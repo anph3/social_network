@@ -12,7 +12,7 @@ class AuthUserMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
-        list_url = get_urls(urls.url_auth.copy())
+        list_url = get_list_url('url_auth')
                         
         if request.path in list_url:
             return self.get_response(request)
