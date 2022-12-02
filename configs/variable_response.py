@@ -16,12 +16,7 @@ ERROR = {
     'not_login':'Not logged in, token is null.',
     'token_not_exists':'Token is not exists.',
     'access_token':'Token fails, you can refresh token.',
-    'user_exists': {
-        'Username or email':'tai khoan da ton tai'
-    },
-    'user_exists_deleted': {
-        'Username or email':'Tai khoan da ton tai, hay doi trang thai tai khoan'
-    },
+    'dulicate_locked_user': ' is the same as the locked user name.',
 }
 
 SUCCESS = {

@@ -41,7 +41,7 @@ class UserView(ViewSet):
         queryset = User.objects.get(id=id)
         data_save = UserSerializer(queryset, data=data, partial=True)
         if not data_save.is_valid():
-            return validate_error(data_save.data)
+            return validate_error(data_save.errors)
         data_save.save()
         return response_data(data_save.data)
     

@@ -21,16 +21,23 @@ class UserSerializer(serializers.ModelSerializer, ActionSerializer):
                 self.fields.pop(field_name)
     # ============================== end contructor ===========================
     
-    # ============================== validate save ============================
-    def validate(self, value):
-        if 'username' in value and 'email' in value:
-            user = User.objects.filter(Q(username=value['username']) | Q(email=value['email']))
-            if user.exclude(deleted_at__isnull=True).exists():
-                raise serializers.ValidationError(ERROR['user_exists_deleted'])
-            if user.filter(deleted_at__isnull=True).exists():
-                raise serializers.ValidationError(ERROR['user_exists'])
+    # ============================== validate save ============================    
+    def validate_username(self, value):
+        user = User.objects.filter(username=value)
+        if user.exclude(deleted_at__isnull=True).exists():
+            raise serializers.ValidationError(ERROR['dulicate_locked_user'])
+        if user.filter(deleted_at__isnull=True).exists():
+            raise serializers.ValidationError(ERROR['exists'])
         return value
     
+    def validate_email(self, value):
+        user = User.objects.filter(email=value)
+        if user.exclude(deleted_at__isnull=True).exists():
+            raise serializers.ValidationError(ERROR['dulicate_locked_user'])
+        if user.filter(deleted_at__isnull=True).exists():
+            raise serializers.ValidationError(ERROR['exists'])
+        return value
+        
     def validate_password(self, value):
         return self.hash_password(value).decode('utf-8')
     
