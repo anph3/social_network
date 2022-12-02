@@ -1,6 +1,7 @@
 from rest_framework.response import Response
 from configs.variable_response import *
 from django.http import JsonResponse
+from math import ceil
 
 def response_data(data=None, status=1, message="Success"):
     result = {
@@ -18,11 +19,18 @@ def json_response(data=None, status=1, message="Success"):
     }
     return JsonResponse(result)
 
-def validate_error(data={}):
+def response_paginator(sum, per_page, data):
+    result = {
+        'max_page': ceil(sum/per_page),
+        'list_data': data
+    }
+    return response_data(data=result)
+
+def validate_error(data={}, status=STATUS['INPUT_INVALID']):
     # if data == {}:
     #     return response_data(status=STATUS['TOKEN_EXPIRED'], message='ERROR')
     data = dict(data)
     error_message = ''
     for key, value in data.items():
         error_message += str(key) + ' ' + str(list(value)[0])
-    return response_data(status=STATUS['TOKEN_EXPIRED'], message=error_message)
+    return response_data(status=status, message=error_message)

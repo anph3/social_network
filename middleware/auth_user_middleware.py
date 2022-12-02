@@ -24,7 +24,7 @@ class AuthUserMiddleware:
         header_token = header_token.replace(TOKEN['type'], '')
         token = cache.get(header_token)
         if token is None:
-            return json_response(status=STATUS['NOT_PERMISSION'], message=ERROR['access_token'])
+            return json_response(status=STATUS['TOKEN_EXPIRED'], message=ERROR['access_token'])
         
         # redis_data = cache.get(token)
         return self.get_response(request)
