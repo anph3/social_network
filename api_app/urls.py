@@ -21,7 +21,9 @@ all_url = {
         path('get-user/<int:id>', UserView.as_view({'get':'get_user'}), name='get_user'),
         path('add-user', AuthView.as_view({'post':'register'}), name='add_user'),
         path('edit-user/<int:id>', UserView.as_view({'put':'edit_user'}), name='edit_user'),
-        path('delete-user/<int:id>', UserView.as_view({'delete':'delete_user'}), name='delete_user'),
+        path('restore-user/<int:id>', UserView.as_view({'put':'restore_user'}), name='restore_user'),
+        path('delete-user/<int:id>', UserView.as_view({'put':'delete_user'}), name='delete_user'),
+        path('drop-user/<int:id>', UserView.as_view({'delete':'delete_user'}), name='delete_user'),
     ]
 }
 

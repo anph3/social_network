@@ -52,11 +52,26 @@ class UserView(ViewSet):
         return response_data(data_save.data)
     
     def delete_user(self, request, id):
+        status, message = self.status_user(request, id, datetime.now())
+        if not status:
+            return validate_error(message)
+        return response_data()
+    
+    def restore_user(self, request, id):
+        status, message = self.status_user(request, id)
+        if not status:
+            return validate_error(message)
+        return response_data()
+    
+    def status_user(self, request, id, data=None):
         status, data_id = self.get_user_data(id)
         if not status:
-            return validate_error(data_id)
+            return False, data_id
         queryset = User.objects.get(id=id)
-        queryset.deleted_at = datetime.now()
+        if request.method == 'DELETE':
+            queryset.delete()
+            return True, None
+        queryset.deleted_at = data
         queryset.save()
-        return response_data()
+        return True, None
         
