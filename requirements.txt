@@ -6,4 +6,5 @@ rsa
 bcrypt
 python-decouple
 pytimeparse
+celery==4.*
 mysqlclient

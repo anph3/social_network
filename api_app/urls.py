@@ -1,6 +1,7 @@
 from django.urls import path
 from .views.auth_views import *
 from .views.user_views import *
+from .views.test_view import *
 from .views.fail_request import custom404
 # from django.conf.urls import (
 #     handler400, handler403, handler404, handler500
@@ -24,7 +25,10 @@ all_url = {
         path('restore-user/<int:id>', UserView.as_view({'put':'restore_user'}), name='restore_user'),
         path('delete-user/<int:id>', UserView.as_view({'put':'delete_user'}), name='delete_user'),
         path('drop-user/<int:id>', UserView.as_view({'delete':'delete_user'}), name='delete_user'),
-    ]
+    ],
+    'url_test':[
+        path('sleep_test', TestView.as_view({'post': 'sleep_test'}), name='sleep_test'),
+    ],
 }
 
 urlpatterns = []

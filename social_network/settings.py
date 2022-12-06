@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'api_app'
+    'api_app',
+    'celery'
 ]
 
 REST_FRAMEWORK = sys_conf.REST_FRAMEWORK
