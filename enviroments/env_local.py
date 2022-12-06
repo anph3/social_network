@@ -30,6 +30,12 @@ MIDDLEWARE = [
     'middleware.auth_user_middleware.AuthUserMiddleware',
 ]
 
+DEFAULT_THROTTLE_CLASSES = [
+    'middleware.throttling.ExtendedRateThrottle'
+]
+
+DEFAULT_THROTTLE_USER = '1/3s'
+
 TEMPLATES_DIRS = []
 
 DATABASES = {
@@ -54,3 +60,20 @@ CACHES = {
 SESSION_CACHE_ALIAS = 'default'
 
 STATIC_URL = 'static/'
+
+REST_FRAMEWORK = {
+    'DATE_FORMAT': DATE_FORMAT,
+    'DATETIME_FORMAT': DATETIME_FORMAT,
+    'DATE_INPUT_FORMATS': DATE_INPUT_FORMATS,
+    'DATETIME_INPUT_FORMATS': DATETIME_INPUT_FORMATS,
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+    ],
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.JSONParser',
+    ],
+    'DEFAULT_THROTTLE_CLASSES': DEFAULT_THROTTLE_CLASSES,
+    'DEFAULT_THROTTLE_RATES': {
+        'user': DEFAULT_THROTTLE_USER
+    } 
+}

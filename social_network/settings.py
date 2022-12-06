@@ -44,18 +44,7 @@ INSTALLED_APPS = [
     'api_app'
 ]
 
-REST_FRAMEWORK = {
-    'DATE_FORMAT': sys_conf.DATE_FORMAT,
-    'DATETIME_FORMAT': sys_conf.DATETIME_FORMAT,
-    'DATE_INPUT_FORMATS': sys_conf.DATE_INPUT_FORMATS,
-    'DATETIME_INPUT_FORMATS': sys_conf.DATETIME_INPUT_FORMATS,
-    'DEFAULT_RENDERER_CLASSES': [
-        'rest_framework.renderers.JSONRenderer',
-    ],
-    'DEFAULT_PARSER_CLASSES': [
-        'rest_framework.parsers.JSONParser',
-    ]
-}
+REST_FRAMEWORK = sys_conf.REST_FRAMEWORK
 
 MIDDLEWARE = sys_conf.MIDDLEWARE
 

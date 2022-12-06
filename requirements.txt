@@ -5,4 +5,5 @@ PyJWT
 rsa
 bcrypt
 python-decouple
+pytimeparse
 mysqlclient
