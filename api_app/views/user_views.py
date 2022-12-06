@@ -2,7 +2,13 @@ from .views import *
 
 class UserView(ViewSet):
     def all_user(self, request):
-        queryset = User.objects.filter(deleted_at__isnull=True)
+        data = request.GET.copy()
+        queryset = User.objects.filter()
+        if 'trash' in data:
+            if data['trash']:
+                queryset = queryset.exclude(deleted_at__isnull=True)
+            else:
+                queryset = queryset.filter(deleted_at__isnull=True)
         paginator = StandardPagination()
         query_data = paginator.paginate_queryset(queryset, request=request)
         serializer = UserSerializer(query_data, many=True)

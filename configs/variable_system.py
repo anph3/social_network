@@ -11,3 +11,7 @@ TOKEN = {
     'tls_access_token':3600,
     'tls_refresh_token':10800
 }
+
+GROUP_URL = {
+    'url_auth',
+}
