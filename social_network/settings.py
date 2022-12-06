@@ -11,7 +11,10 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
-from datetime import timedelta
+import importlib
+from decouple import config
+
+sys_conf = importlib.import_module("enviroments.env_"+config('ENVIROMENT'))
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,9 +27,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-e76#g*9-w+$i9hn@*r+xy^^@253fp*@+ahs2ebhpwu$5_x^x(g'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = sys_conf.DEBUG
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = sys_conf.ALLOWED_HOSTS
 
 
 # Application definition
@@ -42,8 +45,10 @@ INSTALLED_APPS = [
 ]
 
 REST_FRAMEWORK = {
-    'DATE_INPUT_FORMATS': ['%d/%m/%Y', '%Y-%m-%d', '%d-%m-%Y', '%Y/%m/%d'],
-    'DATETIME_INPUT_FORMATS': ['%Y-%m-%d %H:%M:%S', '%Y/%m/%d %H:%M:%S', '%d-%m-%Y %H:%M:%S', "%d/%m/%Y %H:%M:%S"],
+    'DATE_FORMAT': sys_conf.DATE_FORMAT,
+    'DATETIME_FORMAT': sys_conf.DATETIME_FORMAT,
+    'DATE_INPUT_FORMATS': sys_conf.DATE_INPUT_FORMATS,
+    'DATETIME_INPUT_FORMATS': sys_conf.DATETIME_INPUT_FORMATS,
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
     ],
@@ -52,18 +57,14 @@ REST_FRAMEWORK = {
     ]
 }
 
-MIDDLEWARE = [
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.security.SecurityMiddleware',
-    'middleware.auth_user_middleware.AuthUserMiddleware',
-]
+MIDDLEWARE = sys_conf.MIDDLEWARE
 
-ROOT_URLCONF = 'api_app.urls'
+ROOT_URLCONF = sys_conf.ROOT_URLCONF
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': sys_conf.TEMPLATES_DIRS,
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -82,27 +83,12 @@ WSGI_APPLICATION = 'social_network.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql', 
-        'NAME': 'social_network',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': '3306',
-    }
-}
+DATABASES = sys_conf.DATABASES
 
-CACHES = {
-    "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/1"
-        # redis://username:password@127.0.0.1:6379
-    }
-}
+CACHES = sys_conf.CACHES
 
-SESSION_ENGINE = "django.contrib.sessions.backends.cache"
-SESSION_CACHE_ALIAS = "default"
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+SESSION_CACHE_ALIAS = sys_conf.SESSION_CACHE_ALIAS
 
 
 
@@ -140,7 +126,7 @@ USE_TZ = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = sys_conf.STATIC_URL
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
