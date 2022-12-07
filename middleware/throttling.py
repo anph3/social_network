@@ -14,11 +14,10 @@ class ExtendedRateThrottle(throttling.UserRateThrottle):
 
     def debounce_name(self, request):
         str_name = resolve(request.path_info).url_name
-        # str_name = str_name.split("/")[-1]
         return str_name
     
     def allow_request(self, request, view):
-        if request.method == 'GET':
+        if request.method in ['GET']:
             return True
         return super().allow_request(request, view)
 
@@ -32,3 +31,23 @@ class ExtendedRateThrottle(throttling.UserRateThrottle):
             'scope': self.scope,
             'ident': ident
         }
+
+# class CustomThrottle(throttling.SimpleRateThrottle):
+#     def parse_rate(self, rate):
+#         if rate is None:
+#             return (None, None)
+#         num, period = rate.split(vr_sys.THROTTLING['split'])
+#         num_requests = int(num)
+#         duration = {vr_sys.THROTTLING['type_time']: vr_sys.THROTTLING['waiting_time']}[period[0]]
+#         return (num_requests, duration)
+    
+#     def allow_request(self, request, view):
+#         if request.method in vr_sys.THROTTLING['method']:
+#             return True
+#         return super().allow_request(request, view)
+    
+# def custom_exception_handler(exc, context):
+#     return response_data(message=exc.detail)
+    
+# class UserThrottle(CustomThrottle, throttling.UserRateThrottle):
+#     rate = vr_sys.THROTTLING['rate'] + vr_sys.THROTTLING['split'] + vr_sys.THROTTLING['type_time']

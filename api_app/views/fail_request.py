@@ -1,8 +1,8 @@
-from django.http import JsonResponse
+from helpers.response import *
 
 
 def custom404(request, exception=None):
-    return JsonResponse({
-        'status_code': 404,
-        'message': 'The urls was not found'
-    })
+    return json_response(
+        status=404,
+        message='The urls was not found'
+    )
