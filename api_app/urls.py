@@ -3,11 +3,24 @@ from .views.auth_views import *
 from .views.user_views import *
 from .views.test_view import *
 from .views.fail_request import custom404
+from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
 # from django.conf.urls import (
 #     handler400, handler403, handler404, handler500
 # )
+schema_view = get_schema_view(
+    openapi.Info(
+        title='api_app API',
+        default_version='1.0.0',
+        description='API documentation of App',
+    ),
+    public=True
+)
 
 all_url = {
+    'url_swagger':[
+        path('swagger', schema_view.with_ui('swagger', cache_timeout=0), name='swagger')
+    ],
     'url_auth':[
         path('login', AuthView.as_view({'post':'login'}), name='login'),
         path('refresh-token', AuthView.as_view({'post':'refresh_token'}), name='refresh_token'),
