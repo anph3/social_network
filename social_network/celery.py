@@ -1,6 +1,7 @@
 import os
 
 from celery import Celery
+from celery.schedules import crontab
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'social_network.settings')
 
@@ -11,7 +12,8 @@ app.config_from_object('django.conf:settings', namespace='CELERY')
 app.conf.beat_schedule = {
     'print_jobs_3s':{
         'task':'api_app.tasks.print_jobs',
-        'schedule': 3.0
+        'schedule': crontab(minute='*/1'),
+        'args':()
     }
 }
 
