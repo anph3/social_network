@@ -3,9 +3,20 @@ from .views.auth_views import *
 from .views.user_views import *
 from .views.test_view import *
 from .views.fail_request import custom404
+from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
 # from django.conf.urls import (
 #     handler400, handler403, handler404, handler500
 # )
+
+schema_view = get_schema_view(
+    openapi.Info(
+        title='api_app API',
+        default_version='1.0.0',
+        description='API documentation of App',
+    ),
+    public=True
+)
 
 all_url = {
     'url_auth':[
@@ -27,8 +38,12 @@ all_url = {
         path('drop-user/<int:id>', UserView.as_view({'delete':'delete_user'}), name='delete_user'),
     ],
     'url_test':[
+        # path('swagger', schema_view, name='swagger'),
         path('sleep_test', TestView.as_view({'post': 'sleep_test'}), name='sleep_test'),
     ],
+    'url_swagger':[
+        path('swagger', schema_view.with_ui('swagger', cache_timeout=0), name='swagger')
+    ]
 }
 
 urlpatterns = []

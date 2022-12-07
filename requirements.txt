@@ -7,4 +7,5 @@ bcrypt
 python-decouple
 pytimeparse
 celery==4.*
+drf_yasg
 mysqlclient
