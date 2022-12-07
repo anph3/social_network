@@ -69,6 +69,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'social_network.wsgi.application'
 
+CELERY_BROKER_URL = 'redis://localhost:6379'
+
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
