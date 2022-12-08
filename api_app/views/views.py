@@ -21,7 +21,6 @@ from configs.variable_system import *
 #               helpers
 from helpers.response import *
 #               validations
-from ..validations.upload_file import *
 from ..validations.auth_validate import *
 from ..validations.user_validate import *
 #               serializers
