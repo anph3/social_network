@@ -123,3 +123,13 @@ STATIC_URL = sys_conf.STATIC_URL
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Mail setting
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.fpt.com.vn' # 'smtp.fpt.net'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'anph13@fpt.com.vn'
+EMAIL_HOST_PASSWORD = 'fam0886782337@N2'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+DEFAULT_FROM_EMAIL=EMAIL_HOST_USER
