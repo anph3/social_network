@@ -71,9 +71,11 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_PARSER_CLASSES': [
         'rest_framework.parsers.JSONParser',
+        'rest_framework.parsers.MultiPartParser'
     ],
     'DEFAULT_THROTTLE_CLASSES': DEFAULT_THROTTLE_CLASSES,
     'DEFAULT_THROTTLE_RATES': {
         'user': DEFAULT_THROTTLE_USER
-    } 
+    },
+
 }

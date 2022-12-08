@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 import importlib
 from decouple import config
+import os
 
 sys_conf = importlib.import_module("enviroments.env_"+config('ENVIROMENT'))
 
@@ -133,3 +134,5 @@ EMAIL_HOST_USER = 'anph13@fpt.com.vn'
 EMAIL_HOST_PASSWORD = 'fam0886782337@N2'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 DEFAULT_FROM_EMAIL=EMAIL_HOST_USER
+# MEDIA_URL = '/anph/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

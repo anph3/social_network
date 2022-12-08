@@ -41,6 +41,7 @@ all_url = {
     ],
     'url_test':[
         path('sleep_test', TestView.as_view({'post': 'sleep_test'}), name='sleep_test'),
+        path('upload', TestView.as_view({'post': 'upload'}), name='upload'),
     ],
 }
 
