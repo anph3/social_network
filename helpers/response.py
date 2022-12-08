@@ -1,6 +1,7 @@
 from rest_framework.response import Response
 from configs.variable_response import *
 from django.http import JsonResponse
+from django.http import StreamingHttpResponse
 from math import ceil
 
 def response_data(data=None, status=1, message="Success"):

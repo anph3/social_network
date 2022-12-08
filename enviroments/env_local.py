@@ -68,6 +68,7 @@ REST_FRAMEWORK = {
     'DATETIME_INPUT_FORMATS': DATETIME_INPUT_FORMATS,
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
     ],
     'DEFAULT_PARSER_CLASSES': [
         'rest_framework.parsers.JSONParser',
