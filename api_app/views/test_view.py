@@ -10,13 +10,12 @@ class TestView(ViewSet):
         return response_data(data)
     
     def upload(self, request):
-        data = request.data.copy()
-        validate = FileValidate(data=data)
-        if not validate.is_valid():
-            return validate_error(validate.errors)
-        myfile = request.FILES['file'] 
-        name = (datetime.now()).strftime('%d%m%Y%H%M%S') + '.' + str(myfile.name).split('.')[-1]
-        fs = FileSystemStorage()
-        filename = fs.save(name, myfile)
-        uploaded_file_url = fs.url(filename)
-        return response_data(uploaded_file_url)
+        myfile = request.FILES.getlist('file')
+        list_name = []
+        for item in myfile:
+            name = (datetime.now()).strftime('%d%m%Y%H%M%S') + str(item.name)
+            fs = FileSystemStorage()
+            filename = fs.save(name, item)
+            uploaded_file_url = fs.url(filename)
+            list_name.append(name)
+        return response_data(list_name)
