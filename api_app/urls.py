@@ -43,15 +43,16 @@ all_url = {
     ],
     'url_media':[
         path('upload', MediaView.as_view({'post': 'upload'}), name='upload'),
-        path('rm-upload/<str:id>', MediaView.as_view({'post': 'rm_upload'}), name='rm_upload'),
+        path('rm-upload/<str:id>', MediaView.as_view({'get': 'rm_upload'}), name='rm_upload'),
         path(
             FILES['download_file'] + '/<str:id>',
             MediaView.as_view({'get': 'download_file'}),
             name='download_file'
-        ),  
+        ), 
     ],
     'url_test':[
         path('sleep_test', TestView.as_view({'post': 'sleep_test'}), name='sleep_test'),
+        path('read_excel', TestView.as_view({'post': 'read_excel'}), name='read_excel'),
     ],
 }
 

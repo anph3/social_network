@@ -13,6 +13,11 @@ class TestView(ViewSet):
         }
         return response_data(data)
     
+    def read_excel(self, request):
+        data = request.data.copy()
+        xls = excel.read_excel(request)
+        return response_data(xls)
+    
     def upload(self, request):
         path_media = "http://" + request.META['HTTP_HOST']+ "/media"
         myfile = request.FILES.getlist('file')
