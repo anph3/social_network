@@ -96,7 +96,7 @@ class AuthView(ViewSet):
         }
         access_token = self.jwt_encode(data=token, key=TOKEN['public_key'])
         refresh_token = self.jwt_encode(data=token, key=TOKEN['private_key'])
-        return access_token.decode('utf-8'), refresh_token.decode('utf-8')
+        return access_token, refresh_token
         # return str(access_token).replace("'","").lstrip('b'), str(refresh_token).replace("'","").lstrip('b')
     
     def jwt_encode(self, data, key):

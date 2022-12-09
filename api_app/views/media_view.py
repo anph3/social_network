@@ -5,15 +5,16 @@ from wsgiref.util import FileWrapper
 
 class MediaView(ViewSet):
     def upload(self, request):
-        path_media = "http://" + request.META['HTTP_HOST']+ "/media"
+        data_user = get_user_info(request=request)
+        path_media = 'http://' + request.META['HTTP_HOST'] + '/download-file/'
         myfile = request.FILES.getlist('file')
         list_name = []
         for item in myfile:
-            name = (datetime.now()).strftime('%d%m%Y%H%M%S') + '.' + str(item.name).split('.')[-1]
+            name = str(data_user['id']) + (datetime.now()).strftime('%d%m%Y%H%M%S') + '.' + str(item.name).split('.')[-1]
             fs = FileSystemStorage()
-            filename = fs.save(name, item)
-            uploaded_file_url = fs.url(filename)
-            list_name.append(path_media + uploaded_file_url)
+            file_name = fs.save(name, item)
+            path_file = str(fs.url(file_name)).split('/')[-1]
+            list_name.append(path_media + path_file)
         return response_data(list_name)
     
     def rm_upload(self, request, id):
@@ -22,7 +23,25 @@ class MediaView(ViewSet):
         return response_data(id)
     
     def download_file(self, request, id):
-        if not str(id).isdigit():
-            return response_data(status=2, message='id not found')
-        file = open(str(settings.BASE_DIR) + str(settings.MEDIA_URL) + str(id)+'.png', 'rb')
-        return StreamingHttpResponse(FileWrapper(file), content_type='application/png')
+        # validate
+        validate = FileDownloadValidate(data={'id':str(id)})
+        if not validate.is_valid():
+            return validate_error(validate.errors)
+        
+        # path file
+        path_file = "{}{}{}.{}".format(
+            str(settings.BASE_DIR),
+            str(settings.MEDIA_URL),
+            validate.data['id'],
+            validate.data['type']
+        )
+        
+        # open file
+        file = open(path_file, 'rb')
+        
+        # return file
+        return StreamingHttpResponse(
+            FileWrapper(file),
+            content_type='application/'+
+            validate.data['type']
+        )

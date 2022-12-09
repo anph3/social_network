@@ -1,6 +1,7 @@
 from django.urls import path
 from .views.auth_views import *
 from .views.user_views import *
+from .views.media_view import *
 from .views.test_view import *
 from .views.fail_request import custom404
 from drf_yasg import openapi
@@ -40,9 +41,9 @@ all_url = {
         path('drop-user/<int:id>', UserView.as_view({'delete':'delete_user'}), name='delete_user'),
     ],
     'url_media':[
-        path('upload', TestView.as_view({'post': 'upload'}), name='upload'),
-        path('rm-upload/<str:id>', TestView.as_view({'post': 'rm_upload'}), name='rm_upload'),
-        path('download-file/<str:id>', TestView.as_view({'get': 'download_file'}), name='download_file'),  
+        path('upload', MediaView.as_view({'post': 'upload'}), name='upload'),
+        path('rm-upload/<str:id>', MediaView.as_view({'post': 'rm_upload'}), name='rm_upload'),
+        path('download-file/<str:id>', MediaView.as_view({'get': 'download_file'}), name='download_file'),  
     ],
     'url_test':[
         path('sleep_test', TestView.as_view({'post': 'sleep_test'}), name='sleep_test'),

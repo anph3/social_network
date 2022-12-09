@@ -28,8 +28,6 @@ def response_paginator(sum, per_page, data):
     return response_data(data=result)
 
 def validate_error(data={}, status=STATUS['INPUT_INVALID']):
-    # if data == {}:
-    #     return response_data(status=STATUS['TOKEN_EXPIRED'], message='ERROR')
     data = dict(data)
     error_message = ''
     for key, value in data.items():

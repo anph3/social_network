@@ -16,7 +16,7 @@ ERROR = {
     'not_login':'Not logged in, token is null.',
     'token_not_exists':'Token is not exists.',
     'access_token':'Token fails, you can refresh token.',
-    'dulicate_locked_user': ' is the same as the locked user name.',
+    'dulicate_locked_user': ' is the same as the locked user name.'
 }
 
 SUCCESS = {
