@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'api_app',
-    'celery',
+    # 'celery',
     'drf_yasg'
 ]
 
