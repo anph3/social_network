@@ -18,9 +18,13 @@ class MediaView(ViewSet):
         return response_data(list_name)
     
     def rm_upload(self, request, id):
-        if not str(id).isdigit():
-            return response_data(status=2, message='id not found')
-        return response_data(id)
+        # validate
+        validate = FileDownloadValidate(data={'id':str(id)})
+        if not validate.is_valid():
+            return validate_error(validate.errors)
+        # file = validate.data
+        os.remove(os.path.join(settings.MEDIA_ROOT, id))
+        return response_data()
     
     def download_file(self, request, id):
         # validate

@@ -9,6 +9,7 @@ from django.conf import settings
 # =============== end include  ===============
 
 # ================== include =================
+import os
 import jwt
 import bcrypt
 import uuid
