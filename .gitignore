@@ -8,6 +8,6 @@ helpers/__pycache__/
 middleware/__pycache__/
 configs/__pycache__/
 social_network/__pycache__/
-
+venv/
 enviroments/__pycache__/
 console/queues/__pycache__/
