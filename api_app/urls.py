@@ -39,7 +39,7 @@ all_url = {
         path('edit-user/<int:id>', UserView.as_view({'put':'edit_user'}), name='edit_user'),
         path('restore-user/<int:id>', UserView.as_view({'put':'restore_user'}), name='restore_user'),
         path('delete-user/<int:id>', UserView.as_view({'put':'delete_user'}), name='delete_user'),
-        path('drop-user/<int:id>', UserView.as_view({'delete':'delete_user'}), name='delete_user'),
+        path('drop-user/<int:id>', UserView.as_view({'delete':'delete_user'}), name='drop_user'),
     ],
     'url_media':[
         path('upload', MediaView.as_view({'post': 'upload'}), name='upload'),
@@ -49,6 +49,10 @@ all_url = {
             MediaView.as_view({'get': 'download_file'}),
             name='download_file'
         ), 
+    ],
+    'url_in_media':[
+        path('show-file/<str:id>', MediaView.as_view({'get': 'download_file'}), name='show_file'),
+        path('read_request', MediaView.as_view({'post': 'read_request'}), name='read_request'),
     ],
     'url_test':[
         path('sleep_test', TestView.as_view({'post': 'sleep_test'}), name='sleep_test'),

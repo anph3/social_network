@@ -1,6 +1,7 @@
 from .views import *
 from django.core.files.storage import FileSystemStorage
 from wsgiref.util import FileWrapper
+import mimetypes
 
 
 class MediaView(ViewSet):
@@ -49,3 +50,13 @@ class MediaView(ViewSet):
             content_type='application/'+
             validate.data['type']
         )
+    
+    def read_request(self, request):
+        response = requests.request('GET', 
+            'http://localhost:8000/download-file/609122022172139.json',
+            headers={
+                'Authorization':request.headers.get("Authorization")
+            }
+        )
+        
+        return response_data(json.loads(response.text))
