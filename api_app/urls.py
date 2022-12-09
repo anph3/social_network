@@ -39,11 +39,13 @@ all_url = {
         path('delete-user/<int:id>', UserView.as_view({'put':'delete_user'}), name='delete_user'),
         path('drop-user/<int:id>', UserView.as_view({'delete':'delete_user'}), name='delete_user'),
     ],
-    'url_test':[
-        path('sleep_test', TestView.as_view({'post': 'sleep_test'}), name='sleep_test'),
+    'url_media':[
         path('upload', TestView.as_view({'post': 'upload'}), name='upload'),
         path('rm-upload/<str:id>', TestView.as_view({'post': 'rm_upload'}), name='rm_upload'),
-        path('open-file/<str:id>', TestView.as_view({'get': 'read_file'}), name='read_file'),
+        path('download-file/<str:id>', TestView.as_view({'get': 'download_file'}), name='download_file'),  
+    ],
+    'url_test':[
+        path('sleep_test', TestView.as_view({'post': 'sleep_test'}), name='sleep_test'),
     ],
 }
 

@@ -5,6 +5,7 @@ from rest_framework.viewsets import ViewSet
 # ============== include django ==============
 from django.db.models import Q
 from django.core.cache import cache
+from django.conf import settings
 # =============== end include  ===============
 
 # ================== include =================

@@ -1,18 +1,9 @@
 from .views import *
-from time import sleep
 from django.core.files.storage import FileSystemStorage
 from wsgiref.util import FileWrapper
-from django.conf import settings
 
-from django.core.files import File
 
-class TestView(ViewSet):
-    def sleep_test(self, request):
-        data = {
-            "name": "Muhammed Ali"
-        }
-        return response_data(data)
-    
+class MediaView(ViewSet):
     def upload(self, request):
         path_media = "http://" + request.META['HTTP_HOST']+ "/media"
         myfile = request.FILES.getlist('file')
