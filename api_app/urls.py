@@ -1,4 +1,5 @@
 from django.urls import path
+from configs.variable_system import FILES
 from .views.auth_views import *
 from .views.user_views import *
 from .views.media_view import *
@@ -43,7 +44,11 @@ all_url = {
     'url_media':[
         path('upload', MediaView.as_view({'post': 'upload'}), name='upload'),
         path('rm-upload/<str:id>', MediaView.as_view({'post': 'rm_upload'}), name='rm_upload'),
-        path('download-file/<str:id>', MediaView.as_view({'get': 'download_file'}), name='download_file'),  
+        path(
+            FILES['download_file'] + '/<str:id>',
+            MediaView.as_view({'get': 'download_file'}),
+            name='download_file'
+        ),  
     ],
     'url_test':[
         path('sleep_test', TestView.as_view({'post': 'sleep_test'}), name='sleep_test'),

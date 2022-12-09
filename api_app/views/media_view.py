@@ -6,7 +6,7 @@ from wsgiref.util import FileWrapper
 class MediaView(ViewSet):
     def upload(self, request):
         data_user = get_user_info(request=request)
-        path_media = 'http://' + request.META['HTTP_HOST'] + '/download-file/'
+        path_media = 'http://' + request.META['HTTP_HOST'] + '/{}/'.format(FILES['download_file'])
         myfile = request.FILES.getlist('file')
         list_name = []
         for item in myfile:

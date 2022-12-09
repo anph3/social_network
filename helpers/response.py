@@ -4,21 +4,18 @@ from django.http import JsonResponse
 from django.http import StreamingHttpResponse
 from math import ceil
 
-def response_data(data=None, status=1, message="Success"):
-    result = {
+def data_response(data=None, status=1, message="Success"):
+    return {
         'status_code': status,
         'message': message,
         'data': data
     }
-    return Response(result)
+
+def response_data(data=None, status=1, message="Success"):
+    return Response(data_response(data, status, message))
 
 def json_response(data=None, status=1, message="Success"):
-    result = {
-        'status_code': status,
-        'message': message,
-        'data': data
-    }
-    return JsonResponse(result)
+    return JsonResponse(data_response(data, status, message))
 
 def response_paginator(sum, per_page, data):
     result = {

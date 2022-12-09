@@ -3,6 +3,10 @@ KEY_RSA = 'duanfpro'
 U = 'username'
 P = 'password'
 
+FILES = {
+    'download_file':'download-file'
+}
+
 TOKEN = {
     'private_key':'anphMNcZkh',
     'public_key':'fnEcdMHkm',
