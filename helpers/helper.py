@@ -1,10 +1,19 @@
 from django.core.cache import cache
-from configs.variable_system import *
+from configs import variable_system as vs
 import json
 import requests
 
+def host(request):
+    data = request.META.copy()
+    return vs.STR_CURRENT_HOST.format(
+        data["wsgi.url_scheme"],
+        data["HTTP_HOST"]
+    )
+    
+
+
 def get_user_info(request):
-    data = request.headers.get("Authorization").replace(TOKEN['type'], '')
+    data = request.headers.get("Authorization").replace(vs.TOKEN['type'], '')
     a = cache.get(data)
     r = cache.get(a)
     return r

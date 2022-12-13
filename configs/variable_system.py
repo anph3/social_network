@@ -1,3 +1,6 @@
+import os
+from django.conf import settings as st
+
 KEY_RSA = 'duanfpro'
 
 U = 'username'
@@ -22,3 +25,9 @@ GROUP_URL = {
     'url_test',
     'url_in_media',
 }
+
+MEDIA_ROOT = st.MEDIA_ROOT
+
+STR_MEDIA_PATH = '{}{}.{}'
+
+STR_CURRENT_HOST = '{}://{}'

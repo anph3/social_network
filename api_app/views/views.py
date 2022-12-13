@@ -19,7 +19,7 @@ from datetime import datetime
 # ============== include user * ==============
 #               configs
 from configs.variable_response import *
-from configs.variable_system import *
+from configs import variable_system as vs
 #               helpers
 from helpers.response import *
 from helpers.helper import *

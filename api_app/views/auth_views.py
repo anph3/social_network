@@ -11,18 +11,18 @@ class AuthView(ViewSet):
         if not validate.is_valid():
             return validate_error(validate.errors)
         
-        username = data[U]
-        password = data[P]
+        username = data[vs.U]
+        password = data[vs.P]
         
         # kiem tra ton tai user
         user = self.query_user_exists(username)
         if not user.exists():
-            return response_data(status=STATUS['NO_DATA'], message=str(username) + ERROR['not_exists'])
+            return response_data(status=vs.STATUS['NO_DATA'], message=str(username) + vs.ERROR['not_exists'])
         
         # kiem tra password
-        b_password = user.values(P)[0][P]
+        b_password = user.values(vs.P)[0][vs.P]
         if not self.check_passwork(password, b_password):
-            return response_data(status=STATUS['FAIL_REQUEST'],message=ERROR['wrong_password'])
+            return response_data(status=vs.STATUS['FAIL_REQUEST'],message=vs.ERROR['wrong_password'])
         
         # tao token
         a_token, r_token = self.create_token()
@@ -34,7 +34,7 @@ class AuthView(ViewSet):
         return response_data({
             'access_token': a_token,
             'refresh_token':r_token  
-        }, message=SUCCESS['login'])
+        }, message=vs.SUCCESS['login'])
 
     # ham create user or register
     def register(self, request):
@@ -56,7 +56,7 @@ class AuthView(ViewSet):
         # kiem tra refresh token cu
         redis_data = cache.get(data['refresh_token'])
         if redis_data is None:
-            return response_data(status=STATUS['INPUT_INVALID'],message=ERROR['refresh_token'])
+            return response_data(status=vs.STATUS['INPUT_INVALID'],message=vs.ERROR['refresh_token'])
         
         # xoa phien dang nhap cu
         self.delete_token(redis_data['token'], data['refresh_token'])
@@ -69,11 +69,11 @@ class AuthView(ViewSet):
         return response_data({
             'access_token': a_token,
             'refresh_token':r_token  
-        }, message=SUCCESS['refresh_token'])
+        }, message=vs.SUCCESS['refresh_token'])
         
     # ham dang xuat
     def logout(self, request):
-        a_token = request.headers.get("Authorization").replace(TOKEN['type'], '')
+        a_token = request.headers.get("Authorization").replace(vs.TOKEN['type'], '')
         r_token = cache.get(a_token)
         self.delete_token(a_token, r_token)
         return response_data()
@@ -94,28 +94,28 @@ class AuthView(ViewSet):
             'datetime': str(datetime.now()),
             'session': str(uuid.uuid1())
         }
-        access_token = self.jwt_encode(data=token, key=TOKEN['public_key'])
-        refresh_token = self.jwt_encode(data=token, key=TOKEN['private_key'])
+        access_token = self.jwt_encode(data=token, key=vs.TOKEN['public_key'])
+        refresh_token = self.jwt_encode(data=token, key=vs.TOKEN['private_key'])
         return access_token, refresh_token
         # return str(access_token).replace("'","").lstrip('b'), str(refresh_token).replace("'","").lstrip('b')
     
     def jwt_encode(self, data, key):
-        return jwt.encode(data, key, algorithm=TOKEN['hash'])
+        return jwt.encode(data, key, algorithm=vs.TOKEN['hash'])
     
     def query_user_exists(self, username):
         return User.objects.filter(Q(username=username) | Q(email=username)).filter(deleted_at__isnull=True)
     
     def set_token_redis(self, a_token, r_token, data):
         data['token'] = a_token
-        cache.set(a_token, r_token, timeout=TOKEN['tls_access_token'])
-        cache.set(r_token, data, timeout=TOKEN['tls_refresh_token'])
+        cache.set(a_token, r_token, timeout=vs.TOKEN['tls_access_token'])
+        cache.set(r_token, data, timeout=vs.TOKEN['tls_refresh_token'])
         
     def delete_token(self, a_token, r_token):
         cache.delete(a_token)
         cache.delete(r_token)
     
     def get_data_token(self, request):
-        data = request.headers.get("Authorization").replace(TOKEN['type'], '')
+        data = request.headers.get("Authorization").replace(vs.TOKEN['type'], '')
         a = cache.get(data)
         b = cache.get(a)
         return response_data({

@@ -7,7 +7,7 @@ import mimetypes
 class MediaView(ViewSet):
     def upload(self, request):
         data_user = get_user_info(request=request)
-        path_media = 'http://' + request.META['HTTP_HOST'] + '/{}/'.format(FILES['download_file'])
+        path_media = 'http://' + request.META['HTTP_HOST'] + '/{}/'.format(vs.FILES['download_file'])
         myfile = request.FILES.getlist('file')
         list_name = []
         for item in myfile:
@@ -24,7 +24,7 @@ class MediaView(ViewSet):
         if not validate.is_valid():
             return validate_error(validate.errors)
         # file = validate.data
-        os.remove(os.path.join(settings.MEDIA_ROOT, id))
+        os.remove(os.path.join(vs.MEDIA_ROOT, id))
         return response_data()
     
     def download_file(self, request, id):
@@ -34,9 +34,8 @@ class MediaView(ViewSet):
             return validate_error(validate.errors)
         
         # path file
-        path_file = "{}{}{}.{}".format(
-            str(settings.BASE_DIR),
-            str(settings.MEDIA_URL),
+        path_file = vs.STR_MEDIA_PATH.format(
+            vs.MEDIA_ROOT,
             validate.data['id'],
             validate.data['type']
         )
@@ -51,12 +50,23 @@ class MediaView(ViewSet):
             validate.data['type']
         )
     
+    
+    # read json by file upload 
+    '''
+        data = request.FILES['file']
+        print(json.load(data))
+    '''
     def read_request(self, request):
-        response = requests.request('GET', 
-            'http://localhost:8000/download-file/609122022172139.json',
-            headers={
-                'Authorization':request.headers.get("Authorization")
-            }
-        )
         
-        return response_data(json.loads(response.text))
+        # read file json
+        # file = request.data.copy()
+        # response = requests.request('GET', 
+        #     'http://localhost:8000/download-file/' + file['id'],
+        #     headers = {
+        #         'Authorization':request.headers.get("Authorization")
+        #     }
+        # )
+        # return response_data(json.loads(response.text))
+        
+        name_host = host(request)
+        return response_data(host)

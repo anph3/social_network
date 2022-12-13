@@ -1,7 +1,7 @@
 from django.middleware.security import *
 from django.conf import settings
 from configs.variable_response import *
-from configs.variable_system import *
+from configs import variable_system as vs
 from django.core.cache import cache
 from helpers.response import *
 from api_app import urls
@@ -15,7 +15,7 @@ class AuthUserMiddleware:
         current_url = resolve(request.path_info).url_name
         
         list_url = []
-        for item in GROUP_URL:
+        for item in vs.GROUP_URL:
             list_url += self.get_list_url(item)
         
         if current_url in list_url:
@@ -25,7 +25,7 @@ class AuthUserMiddleware:
         if header_token is None:
             return json_response(status=STATUS['NOT_LOGIN'], message=ERROR['not_login'])
         
-        header_token = header_token.replace(TOKEN['type'], '')
+        header_token = header_token.replace(vs.TOKEN['type'], '')
         if not cache.has_key(header_token):
             return json_response(status=STATUS['TOKEN_EXPIRED'], message=ERROR['access_token'])
         
