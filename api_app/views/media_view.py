@@ -6,7 +6,7 @@ import mimetypes
 
 class MediaView(ViewSet):
     def upload(self, request):
-        data_user = get_user_info(request=request)
+        data_user = hp.get_user_info(request=request)
         path_media = 'http://' + request.META['HTTP_HOST'] + '/{}/'.format(vs.FILES['download_file'])
         myfile = request.FILES.getlist('file')
         list_name = []
@@ -68,5 +68,5 @@ class MediaView(ViewSet):
         # )
         # return response_data(json.loads(response.text))
         
-        name_host = host(request)
+        host = hp.host(request)
         return response_data(host)
