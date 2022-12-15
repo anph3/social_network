@@ -11,9 +11,9 @@ TRASH = 'trash'
 
 DROP_METHOD = 'DELETE'
 
-EXCEL_TYPE = "xl"
+EXCEL_TYPE = 'xl'
 
-JSON_TYPE = "json"
+JSON_TYPE = 'json'
 
 OPEN_TYPE = {
     'action': {

@@ -14,7 +14,7 @@ class ExtendedRateThrottle(throttling.UserRateThrottle):
 
     def debounce_name(self, request):
         str_name = resolve(request.path_info).url_name
-        # str_name = str_name.split("/")[-1]
+        # str_name = str_name.split('/')[-1]
         return str_name
     
     def allow_request(self, request, view):

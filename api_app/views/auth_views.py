@@ -94,7 +94,7 @@ class AuthView(ViewSet):
         
     # ham dang xuat
     def logout(self, request):
-        a_token = request.headers.get("Authorization")
+        a_token = request.headers.get('Authorization')
         a_token = a_token.replace(vs.TOKEN['type'], '')
         r_token = cache.get(a_token)
         self.delete_token(a_token, r_token)
@@ -158,7 +158,7 @@ class AuthView(ViewSet):
         cache.delete(r_token)
     
     def get_data_token(self, request):
-        data = request.headers.get("Authorization")
+        data = request.headers.get('Authorization')
         data = data.replace(vs.TOKEN['type'], '')
         a = cache.get(data)
         b = cache.get(a)

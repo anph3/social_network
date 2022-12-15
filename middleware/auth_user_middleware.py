@@ -20,7 +20,7 @@ class AuthUserMiddleware:
         
         if current_url in list_url:
             return self.get_response(request)
-        header_token = request.headers.get("Authorization")
+        header_token = request.headers.get('Authorization')
         
         if header_token is None:
             return json_response(status=STATUS['NOT_LOGIN'], message=ERROR['not_login'])

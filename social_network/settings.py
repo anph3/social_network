@@ -15,7 +15,7 @@ import importlib
 from decouple import config
 import os
 
-sys_conf = importlib.import_module("enviroments.env_"+config('ENVIROMENT'))
+sys_conf = importlib.import_module('enviroments.env_'+config('ENVIROMENT'))
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
