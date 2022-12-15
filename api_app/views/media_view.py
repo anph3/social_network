@@ -33,40 +33,52 @@ class MediaView(ViewSet):
         if not validate.is_valid():
             return validate_error(validate.errors)
         
-        # path file
-        path_file = vs.STR_MEDIA_PATH.format(
-            vs.MEDIA_ROOT,
-            validate.data['id'],
-            validate.data['type']
-        )
+        data = validate.data.copy()
         
         # open file
-        file = open(path_file, 'rb')
+        file = self.file_to_byte(data['id'], data['type'])
         
         # return file
         return StreamingHttpResponse(
             FileWrapper(file),
             content_type='application/'+
-            validate.data['type']
+            data['type']
         )
-    
-    
-    # read json by file upload 
-    '''
-        data = request.FILES['file']
-        print(json.load(data))
-    '''
-    def read_request(self, request):
         
-        # read file json
-        # file = request.data.copy()
-        # response = requests.request('GET', 
-        #     'http://localhost:8000/download-file/' + file['id'],
-        #     headers = {
-        #         'Authorization':request.headers.get("Authorization")
-        #     }
-        # )
-        # return response_data(json.loads(response.text))
+    def show_file(self, request, id):
+        validate = FileDownloadValidate(data={'id':str(id)})
+        if not validate.is_valid():
+            return validate_error(validate.errors)
+        data = validate.data.copy()
+        file = self.file_to_byte(data['id'], data['type'])
+        return FileResponse(file)
         
-        host = hp.host(request)
-        return response_data(host)
+    def read_file(self, request):
+        data = request.data.copy()
+        
+        # validate
+        validate = FileDownloadValidate(data=data)
+        if not validate.is_valid():
+            return validate_error(validate.errors)
+        
+        type_file = validate.data.copy()
+        if vs.JSON_TYPE in type_file['type']:
+            result = self.file_to_byte(type_file['id'], type_file['type'])
+            return response_data(json.load(result))
+        if vs.EXCEL_TYPE in type_file['type']:
+            return response_data()
+        
+        return response_data()
+    
+    def file_to_byte(self, id, type):
+        # path file
+        path_file = vs.STR_MEDIA_PATH.format(
+            vs.MEDIA_ROOT,
+            id,
+            type
+        )
+        
+        # open file
+        file = open(path_file, 'rb')
+        
+        return file

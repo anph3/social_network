@@ -17,12 +17,12 @@ class AuthView(ViewSet):
         # kiem tra ton tai user
         user = self.query_user_exists(username)
         if not user.exists():
-            return response_data(status=vs.STATUS['NO_DATA'], message=str(username) + vs.ERROR['not_exists'])
+            return response_data(status=STATUS['NO_DATA'], message=str(username) + ERROR['not_exists'])
         
         # kiem tra password
         b_password = user.values(vs.P)[0][vs.P]
         if not self.check_passwork(password, b_password):
-            return response_data(status=vs.STATUS['FAIL_REQUEST'],message=vs.ERROR['wrong_password'])
+            return response_data(status=STATUS['FAIL_REQUEST'],message=ERROR['wrong_password'])
         
         # tao token
         a_token, r_token = self.create_token()
@@ -34,7 +34,7 @@ class AuthView(ViewSet):
         return response_data({
             'access_token': a_token,
             'refresh_token':r_token  
-        }, message=vs.SUCCESS['login'])
+        }, message=SUCCESS['login'])
 
     # ham create user or register
     def register(self, request):
@@ -56,7 +56,7 @@ class AuthView(ViewSet):
         # kiem tra refresh token cu
         redis_data = cache.get(data['refresh_token'])
         if redis_data is None:
-            return response_data(status=vs.STATUS['INPUT_INVALID'],message=vs.ERROR['refresh_token'])
+            return response_data(status=STATUS['INPUT_INVALID'],message=ERROR['refresh_token'])
         
         # xoa phien dang nhap cu
         self.delete_token(redis_data['token'], data['refresh_token'])
@@ -69,11 +69,11 @@ class AuthView(ViewSet):
         return response_data({
             'access_token': a_token,
             'refresh_token':r_token  
-        }, message=vs.SUCCESS['refresh_token'])
+        }, message=SUCCESS['refresh_token'])
         
     # ham dang xuat
     def logout(self, request):
-        a_token = request.headers.get("Authorization").replace(vs.TOKEN['type'], '')
+        a_token = request.headers.get("Authorization").replace(TOKEN['type'], '')
         r_token = cache.get(a_token)
         self.delete_token(a_token, r_token)
         return response_data()

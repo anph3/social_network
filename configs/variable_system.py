@@ -1,10 +1,28 @@
 import os
 from django.conf import settings as st
+from enum import Enum
 
 KEY_RSA = 'duanfpro'
 
 U = 'username'
 P = 'password'
+
+EXCEL_TYPE = "xl"
+
+JSON_TYPE = "json"
+
+OPEN_TYPE = {
+    'action': {
+        'read':'r',
+        'append':'a',
+        'write':'w',
+        'create':'x'
+    },
+    'type': {
+        'text':'t',
+        'binary': 'b'
+    }
+}
 
 FILES = {
     'download_file':'download-file'

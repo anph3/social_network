@@ -11,4 +11,4 @@ mysqlclient
 drf_yasg
 pandas
 openpyxl
-excel2json-3
+# excel2json-3

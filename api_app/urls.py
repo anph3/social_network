@@ -49,10 +49,11 @@ all_url = {
             MediaView.as_view({'get': 'download_file'}),
             name='download_file'
         ), 
+        path('read-file', MediaView.as_view({'post': 'read_file'}), name='read_file'),
     ],
     'url_in_media':[
-        path('show-file/<str:id>', MediaView.as_view({'get': 'download_file'}), name='show_file'),
-        path('read_request', MediaView.as_view({'post': 'read_request'}), name='read_request'),
+        path('show-file/<str:id>', MediaView.as_view({'get': 'show_file'}), name='show_file'),
+        # path('read-file', MediaView.as_view({'post': 'read_file'}), name='read_file'),
     ],
     'url_test':[
         path('sleep_test', TestView.as_view({'post': 'sleep_test'}), name='sleep_test'),
