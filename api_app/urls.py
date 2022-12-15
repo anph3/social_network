@@ -4,7 +4,7 @@ from .views.auth_views import *
 from .views.user_views import *
 from .views.media_view import *
 from .views.test_view import *
-from .views.fail_request import custom404
+from helpers.response import custom404
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 # from django.conf.urls import (

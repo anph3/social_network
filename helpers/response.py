@@ -29,3 +29,6 @@ def validate_error(data={}, status=STATUS['INPUT_INVALID']):
     for key, value in data.items():
         error_message += str(key) + ' ' + str(list(value)[0]) + '<br/>'
     return response_data(status=status, message=error_message)
+
+def custom404(request, exception=None):
+    return json_response(status=404, message=ERROR['404'])

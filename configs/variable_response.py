@@ -17,7 +17,8 @@ ERROR = {
     'token_not_exists':'Token is not exists.',
     'access_token':'Token fails, you can refresh token.',
     'dulicate_locked_user': ' is the same as the locked user name.',
-    'file_not_read': 'can\'t read file'
+    'file_not_read': 'can\'t read file',
+    '404': 'The urls was not found'
 }
 
 SUCCESS = {
