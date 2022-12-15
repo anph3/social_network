@@ -2,6 +2,7 @@ from .views import *
 from django.core.files.storage import FileSystemStorage
 from wsgiref.util import FileWrapper
 import mimetypes
+import pandas
 
 
 class MediaView(ViewSet):
@@ -62,13 +63,21 @@ class MediaView(ViewSet):
             return validate_error(validate.errors)
         
         type_file = validate.data.copy()
+        result = self.file_to_byte(type_file['id'], type_file['type'])
+        path_file = vs.STR_MEDIA_PATH.format(
+            vs.MEDIA_ROOT,
+            type_file['id'],
+            type_file['type']
+        )
+        
         if vs.JSON_TYPE in type_file['type']:
-            result = self.file_to_byte(type_file['id'], type_file['type'])
             return response_data(json.load(result))
         if vs.EXCEL_TYPE in type_file['type']:
-            return response_data()
+            excel_data_df = pandas.read_excel(path_file)
+            json_str = excel_data_df.to_json(orient='records')
+            return response_data(json.loads(json_str))
         
-        return response_data()
+        return response_data(status=STATUS['INPUT_INVALID'], message=ERROR['file_not_read'])
     
     def file_to_byte(self, id, type):
         # path file

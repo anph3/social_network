@@ -13,11 +13,15 @@ class UserSerializer(serializers.ModelSerializer, ActionSerializer):
     # ============================= function contructor =======================
     def __init__(self, *args, **kwargs):
         fields = kwargs.pop('fields', None)
+        not_fields = kwargs.pop('not_fields', None)
         super().__init__(*args, **kwargs)
         if fields is not None:
             allowed = set(fields)
             existing = set(self.fields)
             for field_name in existing - allowed:
+                self.fields.pop(field_name)   
+        if not_fields is not None:
+            for field_name in not_fields:
                 self.fields.pop(field_name)
     # ============================== end contructor ===========================
     
