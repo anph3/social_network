@@ -3,6 +3,7 @@ from configs.variable_system import FILES
 from .views.auth_views import *
 from .views.user_views import *
 from .views.media_view import *
+from .views.mail_view import *
 from .views.test_view import *
 from helpers.response import custom404
 from drf_yasg import openapi
@@ -55,9 +56,11 @@ all_url = {
         path('show-file/<str:id>', MediaView.as_view({'get': 'show_file'}), name='show_file'),
         # path('read-file', MediaView.as_view({'post': 'read_file'}), name='read_file'),
     ],
+    'url_mail':[
+        path('send-mail', MailView.as_view({'post': 'send_mail'}), name='send_mail'),
+    ],
     'url_test':[
         path('sleep_test', TestView.as_view({'post': 'sleep_test'}), name='sleep_test'),
-        path('read_excel', TestView.as_view({'post': 'read_excel'}), name='read_excel'),
     ],
 }
 

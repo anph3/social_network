@@ -4,8 +4,8 @@ class UserView(ViewSet):
     def all_user(self, request):
         data = request.GET.copy()
         queryset = User.objects.filter()
-        if 'trash' in data:
-            if data['trash']:
+        if vs.TRASH in data:
+            if data[vs.TRASH]:
                 queryset = queryset.exclude(deleted_at__isnull=True)
             else:
                 queryset = queryset.filter(deleted_at__isnull=True)
@@ -68,7 +68,7 @@ class UserView(ViewSet):
         if not status:
             return False, data_id
         queryset = User.objects.get(id=id)
-        if request.method == 'DELETE':
+        if request.method == vs.DROP_METHOD:
             queryset.delete()
             return True, None
         queryset.deleted_at = data

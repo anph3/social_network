@@ -7,6 +7,10 @@ KEY_RSA = 'duanfpro'
 U = 'username'
 P = 'password'
 
+TRASH = 'trash'
+
+DROP_METHOD = 'DELETE'
+
 EXCEL_TYPE = "xl"
 
 JSON_TYPE = "json"
@@ -46,6 +50,7 @@ GROUP_URL = {
 
 MEDIA_ROOT = st.MEDIA_ROOT
 
+# name file and name stogare, don't changes
 STR_MEDIA_PATH = '{}{}.{}'
 
 STR_CURRENT_HOST = '{}://{}'

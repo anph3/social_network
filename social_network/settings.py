@@ -127,13 +127,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Mail setting
 
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.fpt.com.vn' # 'smtp.fpt.net'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'anph13@fpt.com.vn'
-EMAIL_HOST_PASSWORD = 'fam0886782337@N2'
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-DEFAULT_FROM_EMAIL=EMAIL_HOST_USER
+EMAIL_USE_TLS = sys_conf.EMAIL_USE_TLS
+EMAIL_HOST = sys_conf.EMAIL_HOST
+EMAIL_PORT = sys_conf.EMAIL_PORT
+EMAIL_HOST_USER = sys_conf.EMAIL_HOST_USER
+EMAIL_HOST_PASSWORD = sys_conf.EMAIL_HOST_PASSWORD 
+EMAIL_BACKEND = sys_conf.EMAIL_BACKEND 
+DEFAULT_FROM_EMAIL= sys_conf.DEFAULT_FROM_EMAIL
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')

@@ -10,12 +10,16 @@ class MediaView(ViewSet):
         data = request.META.copy()
         
         data_user = hp.get_user_info(request=request)
-        path_media = vs.STR_CURRENT_HOST.format(data['wsgi.url_scheme'],data['HTTP_HOST']) + \
+        path_media = hp.host(request=request) + \
         '/{}/'.format(vs.FILES['download_file'])
         myfile = request.FILES.getlist('file')
         list_name = []
         for item in myfile:
-            name = str(data_user['id']) + (datetime.now()).strftime('%d%m%Y%H%M%S') + '.' + str(item.name).split('.')[-1]
+            name = vs.STR_MEDIA_PATH.format(
+                str(data_user['id']),
+                (datetime.now()).strftime('%d%m%Y%H%M%S'),
+                str(item.name).split('.')[-1]
+            )
             fs = FileSystemStorage()
             file_name = fs.save(name, item)
             path_file = str(fs.url(file_name)).split('/')[-1]
@@ -40,7 +44,7 @@ class MediaView(ViewSet):
         data = validate.data.copy()
         
         # open file
-        file = self.file_to_byte(data['id'], data['type'])
+        file = hp.file_to_byte(data['id'], data['type'])
         
         # return file
         return StreamingHttpResponse(
@@ -54,7 +58,7 @@ class MediaView(ViewSet):
         if not validate.is_valid():
             return validate_error(validate.errors)
         data = validate.data.copy()
-        file = self.file_to_byte(data['id'], data['type'])
+        file = hp.file_to_byte(data['id'], data['type'])
         return FileResponse(file)
         
     def read_file(self, request):
@@ -66,7 +70,7 @@ class MediaView(ViewSet):
             return validate_error(validate.errors)
         
         type_file = validate.data.copy()
-        result = self.file_to_byte(type_file['id'], type_file['type'])
+        result = hp.file_to_byte(type_file['id'], type_file['type'])
         path_file = vs.STR_MEDIA_PATH.format(
             vs.MEDIA_ROOT,
             type_file['id'],
@@ -80,17 +84,7 @@ class MediaView(ViewSet):
             json_str = excel_data_df.to_json(orient='records')
             return response_data(json.loads(json_str))
         
-        return response_data(status=STATUS['INPUT_INVALID'], message=ERROR['file_not_read'])
-    
-    def file_to_byte(self, id, type):
-        # path file
-        path_file = vs.STR_MEDIA_PATH.format(
-            vs.MEDIA_ROOT,
-            id,
-            type
+        return response_data(
+            status=STATUS['INPUT_INVALID'],
+            message=ERROR['file_not_read']
         )
-        
-        # open file
-        file = open(path_file, 'rb')
-        
-        return file

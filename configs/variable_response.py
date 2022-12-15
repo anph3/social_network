@@ -18,10 +18,12 @@ ERROR = {
     'access_token':'Token fails, you can refresh token.',
     'dulicate_locked_user': ' is the same as the locked user name.',
     'file_not_read': 'can\'t read file',
-    '404': 'The urls was not found'
+    '404': 'The urls was not found',
+    'send_mail': 'Send mail error.',
 }
 
 SUCCESS = {
     'login':'Login success.',
     'refresh_token':'Refresh success.',
+    'send_mail': 'Send mail success.',
 }

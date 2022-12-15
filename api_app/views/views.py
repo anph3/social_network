@@ -30,6 +30,7 @@ from helpers import excel
 from ..validations.auth_validate import *
 from ..validations.user_validate import *
 from ..validations.file_validate import *
+from ..validations.mail_validate import *
 #               serializers
 from ..serializers.user_serializer import *
 #               paginations
