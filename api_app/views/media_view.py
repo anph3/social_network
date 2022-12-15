@@ -7,8 +7,11 @@ import pandas
 
 class MediaView(ViewSet):
     def upload(self, request):
+        data = request.META.copy()
+        
         data_user = hp.get_user_info(request=request)
-        path_media = 'http://' + request.META['HTTP_HOST'] + '/{}/'.format(vs.FILES['download_file'])
+        path_media = vs.STR_CURRENT_HOST.format(data['wsgi.url_scheme'],data['HTTP_HOST']) + \
+        '/{}/'.format(vs.FILES['download_file'])
         myfile = request.FILES.getlist('file')
         list_name = []
         for item in myfile:
