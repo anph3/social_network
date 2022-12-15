@@ -19,7 +19,7 @@ class UserSerializer(serializers.ModelSerializer, ActionSerializer):
             allowed = set(fields)
             existing = set(self.fields)
             for field_name in existing - allowed:
-                self.fields.pop(field_name)   
+                self.fields.pop(field_name)
         if not_fields is not None:
             for field_name in not_fields:
                 self.fields.pop(field_name)
