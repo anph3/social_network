@@ -36,4 +36,6 @@ from ..serializers.user_serializer import *
 from ..serializers.mail_serializer import *
 #               paginations
 from ..paginations import *
+#               celery
+from console.jobs import queue_mail as qm
 # =============== end include  ===============

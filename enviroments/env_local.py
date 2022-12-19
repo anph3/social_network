@@ -57,6 +57,8 @@ CACHES = {
     }
 }
 
+CELERY_BROKER_URL = 'redis://localhost:6379/10'
+
 SESSION_CACHE_ALIAS = 'default'
 
 STATIC_URL = 'static/'

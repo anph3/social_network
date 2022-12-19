@@ -11,3 +11,5 @@ social_network/__pycache__/
 venv/
 enviroments/__pycache__/
 console/queues/__pycache__/
+console/jobs/__pycache__/
+celerybeat-schedule

@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'api_app',
-    # 'celery',
+    'celery',
     'drf_yasg'
 ]
 
@@ -70,6 +70,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'social_network.wsgi.application'
+
+CELERY_BROKER_URL = sys_conf.CELERY_BROKER_URL
 
 
 # Database

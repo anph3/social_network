@@ -28,6 +28,13 @@ OPEN_TYPE = {
     }
 }
 
+CELERY_QUEUE = {
+    'retry_task': {
+        'max_retries': 2,
+        'countdown': 5
+    }
+}
+
 FILES = {
     'download_file':'download-file'
 }

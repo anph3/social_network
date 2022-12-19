@@ -6,7 +6,7 @@ rsa
 bcrypt
 python-decouple
 pytimeparse
-# celery==4.*
+celery
 mysqlclient
 drf_yasg
 pandas

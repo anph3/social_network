@@ -57,7 +57,9 @@ class MailView(ViewSet):
         serializer = MailSerializer(data=data)
         if not serializer.is_valid():
             return validate_error(serializer.errors)
-        serializer.save()
+        qm.add_mail.apply_async(kwargs={
+            'data':serializer.data
+        })
         return response_data(serializer.data)
     
     def edit_mail(self, request, id):
@@ -65,12 +67,11 @@ class MailView(ViewSet):
         status, data_id = self.get_mail_data(id)
         if not status:
             return validate_error(data_id)
-        queryset = TemplateMail.objects.get(id=id)
-        data_save = MailSerializer(queryset, data=data, partial=True)
-        if not data_save.is_valid():
-            return validate_error(data_save.errors)
-        data_save.save()
-        return response_data(data_save.data)
+        qm.edit_mail.apply_async(kwargs={
+            'data':data,
+            'id':id
+        })
+        return response_data(data)
     
     def delete_mail(self, request, id):
         status, message = self.status_mail(request, id, datetime.now())

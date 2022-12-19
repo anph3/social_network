@@ -50,6 +50,7 @@ all_url = {
         path('restore-mail/<int:id>', MailView.as_view({'put':'restore_mail'}), name='restore_mail'),
         path('delete-mail/<int:id>', MailView.as_view({'put':'delete_mail'}), name='delete_mail'),
         path('drop-mail/<int:id>', MailView.as_view({'delete':'delete_mail'}), name='drop_mail'),
+        # path('import-mail', MailView.as_view({'post':'import_mail'}), name='import_mail'),
         
     ],
     'url_media':[
