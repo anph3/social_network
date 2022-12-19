@@ -11,6 +11,6 @@ class IdGetUserValidate(serializers.Serializer):
     def validate(self, value):
         queryset = User.objects.filter(id=value['id'])
         if not queryset.exists():
-            raise serializers.ValidationError(ERROR['exists'])
+            raise serializers.ValidationError({'user':ERROR['not_exists']})
         value['data'] = queryset.values()[0]
         return value

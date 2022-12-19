@@ -33,6 +33,7 @@ from ..validations.file_validate import *
 from ..validations.mail_validate import *
 #               serializers
 from ..serializers.user_serializer import *
+from ..serializers.mail_serializer import *
 #               paginations
 from ..paginations import *
 # =============== end include  ===============

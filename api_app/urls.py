@@ -42,6 +42,16 @@ all_url = {
         path('delete-user/<int:id>', UserView.as_view({'put':'delete_user'}), name='delete_user'),
         path('drop-user/<int:id>', UserView.as_view({'delete':'delete_user'}), name='drop_user'),
     ],
+    'url_mail':[
+        path('all-mail', MailView.as_view({'get':'all_mail'}), name='all_mail'),
+        path('get-mail/<int:id>', MailView.as_view({'get':'get_mail'}), name='get_mail'),
+        path('add-mail', MailView.as_view({'post':'add_mail'}), name='add_mail'),
+        path('edit-mail/<int:id>', MailView.as_view({'put':'edit_mail'}), name='edit_mail'),
+        path('restore-mail/<int:id>', MailView.as_view({'put':'restore_mail'}), name='restore_mail'),
+        path('delete-mail/<int:id>', MailView.as_view({'put':'delete_mail'}), name='delete_mail'),
+        path('drop-mail/<int:id>', MailView.as_view({'delete':'delete_mail'}), name='drop_mail'),
+        
+    ],
     'url_media':[
         path('upload', MediaView.as_view({'post': 'upload'}), name='upload'),
         path('rm-upload/<str:id>', MediaView.as_view({'get': 'rm_upload'}), name='rm_upload'),
@@ -56,7 +66,7 @@ all_url = {
         path('show-file/<str:id>', MediaView.as_view({'get': 'show_file'}), name='show_file'),
         # path('read-file', MediaView.as_view({'post': 'read_file'}), name='read_file'),
     ],
-    'url_mail':[
+    'url_in_mail':[        
         path('send-mail', MailView.as_view({'post': 'send_mail'}), name='send_mail'),
     ],
     'url_test':[
