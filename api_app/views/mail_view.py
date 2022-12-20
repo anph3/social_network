@@ -74,25 +74,30 @@ class MailView(ViewSet):
         return response_data(data)
     
     def delete_mail(self, request, id):
-        status, message = self.status_mail(request, id, datetime.now())
+        status, data_id = self.get_mail_data(id)
         if not status:
-            return validate_error(message)
+            return validate_error(data_id)
+        qm.delete_mail.apply_async(kwargs={
+            'data': datetime.now(),
+            'id': id
+        })
         return response_data()
     
     def restore_mail(self, request, id):
-        status, message = self.status_mail(request, id)
-        if not status:
-            return validate_error(message)
-        return response_data()
-    
-    def status_mail(self, request, id, data=None):
         status, data_id = self.get_mail_data(id)
         if not status:
-            return False, data_id
-        queryset = TemplateMail.objects.get(id=id)
-        if request.method == vs.DROP_METHOD:
-            queryset.delete()
-            return True, None
-        queryset.deleted_at = data
-        queryset.save()
-        return True, None
+            return validate_error(data_id)
+        qm.delete_mail.apply_async(kwargs={
+            'data': None,
+            'id': id
+        })
+        return response_data()
+    
+    def drop_mail(self, request, id):
+        status, data_id = self.get_mail_data(id)
+        if not status:
+            return validate_error(data_id)
+        qm.drop_mail.apply_async(kwargs={
+            'id': id
+        })
+        return response_data()
