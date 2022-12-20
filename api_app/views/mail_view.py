@@ -5,7 +5,7 @@ class MailView(ViewSet):
         data = request.data.copy()
         validate = MailValidate(data=data)
         if not validate.is_valid():
-            return validate_error(validate.errors)
+            return validate_error(request, validate.errors)
         
         result = validate.data
         if hp.send_mail(
@@ -15,10 +15,10 @@ class MailView(ViewSet):
             cc = result['cc'],
             bcc = result['bcc']
         ):
-            return response_data(
+            return response_data(request, 
                 message=SUCCESS['send_mail']
             )
-        return response_data(
+        return response_data(request, 
             status=STATUS['FAIL_REQUEST'], 
             message=ERROR['send_mail']
         )
@@ -34,7 +34,7 @@ class MailView(ViewSet):
         paginator = StandardPagination()
         query_data = paginator.paginate_queryset(queryset, request=request)
         serializer = MailSerializer(query_data, many=True)
-        return response_paginator(
+        return response_paginator(request, 
             sum=queryset.count(), 
             per_page=paginator.page_size, 
             data=serializer.data
@@ -43,8 +43,8 @@ class MailView(ViewSet):
     def get_mail(self, request, id):
         status, data = self.get_mail_data(id)
         if status:
-            return response_data(data)
-        return validate_error(data)
+            return response_data(request, data)
+        return validate_error(request, data)
     
     def get_mail_data(self, id):
         validate = IdMailValidate(data={'id':id})
@@ -56,48 +56,48 @@ class MailView(ViewSet):
         data = request.data.copy()
         serializer = MailSerializer(data=data)
         if not serializer.is_valid():
-            return validate_error(serializer.errors)
+            return validate_error(request, serializer.errors)
         qm.add_mail.apply_async(kwargs={
             'data':serializer.data
         })
-        return response_data(serializer.data)
+        return response_data(request, serializer.data)
     
     def edit_mail(self, request, id):
         data = request.data.copy()
         status, data_id = self.get_mail_data(id)
         if not status:
-            return validate_error(data_id)
+            return validate_error(request, data_id)
         qm.edit_mail.apply_async(kwargs={
             'data':data,
             'id':id
         })
-        return response_data(data)
+        return response_data(request, data)
     
     def delete_mail(self, request, id):
         status, data_id = self.get_mail_data(id)
         if not status:
-            return validate_error(data_id)
+            return validate_error(request, data_id)
         qm.delete_mail.apply_async(kwargs={
             'data': datetime.now(),
             'id': id
         })
-        return response_data()
+        return response_data(request, )
     
     def restore_mail(self, request, id):
         status, data_id = self.get_mail_data(id)
         if not status:
-            return validate_error(data_id)
+            return validate_error(request, data_id)
         qm.delete_mail.apply_async(kwargs={
             'data': None,
             'id': id
         })
-        return response_data()
+        return response_data(request, )
     
     def drop_mail(self, request, id):
         status, data_id = self.get_mail_data(id)
         if not status:
-            return validate_error(data_id)
+            return validate_error(request, data_id)
         qm.drop_mail.apply_async(kwargs={
             'id': id
         })
-        return response_data()
+        return response_data(request, )

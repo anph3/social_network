@@ -10,4 +10,4 @@ class TestView(ViewSet):
         data = {
             "name": "Muhammed Ali"
         }
-        return response_data(data)
+        return response_data(request, data)

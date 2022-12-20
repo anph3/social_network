@@ -24,22 +24,22 @@ class MediaView(ViewSet):
             file_name = fs.save(name, item)
             path_file = str(fs.url(file_name)).split('/')[-1]
             list_name.append(path_media + path_file)
-        return response_data(list_name)
+        return response_data(request, list_name)
     
     def rm_upload(self, request, id):
         # validate
         validate = FileDownloadValidate(data={'id':str(id)})
         if not validate.is_valid():
-            return validate_error(validate.errors)
+            return validate_error(request, validate.errors)
         # file = validate.data
         os.remove(os.path.join(vs.MEDIA_ROOT, id))
-        return response_data()
+        return response_data(request, )
     
     def download_file(self, request, id):
         # validate
         validate = FileDownloadValidate(data={'id':str(id)})
         if not validate.is_valid():
-            return validate_error(validate.errors)
+            return validate_error(request, validate.errors)
         
         data = validate.data.copy()
         
@@ -56,7 +56,7 @@ class MediaView(ViewSet):
     def show_file(self, request, id):
         validate = FileDownloadValidate(data={'id':str(id)})
         if not validate.is_valid():
-            return validate_error(validate.errors)
+            return validate_error(request, validate.errors)
         data = validate.data.copy()
         file = hp.file_to_byte(data['id'], data['type'])
         return FileResponse(file)
@@ -67,7 +67,7 @@ class MediaView(ViewSet):
         # validate
         validate = FileDownloadValidate(data=data)
         if not validate.is_valid():
-            return validate_error(validate.errors)
+            return validate_error(request, validate.errors)
         
         type_file = validate.data.copy()
         result = hp.file_to_byte(type_file['id'], type_file['type'])
@@ -78,13 +78,13 @@ class MediaView(ViewSet):
         )
         
         if vs.JSON_TYPE in type_file['type']:
-            return response_data(json.load(result))
+            return response_data(request, json.load(result))
         if vs.EXCEL_TYPE in type_file['type']:
             excel_data_df = pandas.read_excel(path_file)
             json_str = excel_data_df.to_json(orient='records')
-            return response_data(json.loads(json_str))
+            return response_data(request, json.loads(json_str))
         
-        return response_data(
+        return response_data(request, 
             status=STATUS['INPUT_INVALID'],
             message=ERROR['file_not_read']
         )

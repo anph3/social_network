@@ -9,7 +9,7 @@ class AuthView(ViewSet):
         # check input request
         validate = LoginValidate(data=data)
         if not validate.is_valid():
-            return validate_error(validate.errors)
+            return validate_error(request, validate.errors)
         
         username = data[vs.U]
         password = data[vs.P]
@@ -17,7 +17,7 @@ class AuthView(ViewSet):
         # kiem tra ton tai user
         user = self.query_user_exists(username)
         if not user.exists():
-            return response_data(
+            return response_data(request, 
                 status=STATUS['NO_DATA'],
                 message=str(username) + \
                 ERROR['not_exists']
@@ -26,7 +26,7 @@ class AuthView(ViewSet):
         # kiem tra password
         b_password = user.values(vs.P)[0][vs.P]
         if not self.check_passwork(password, b_password):
-            return response_data(
+            return response_data(request, 
                 status=STATUS['FAIL_REQUEST'],
                 message=ERROR['wrong_password']
             )
@@ -42,7 +42,7 @@ class AuthView(ViewSet):
             r_token = r_token, 
             data = redis_data
         )
-        return response_data({
+        return response_data(request, {
             'access_token': a_token,
             'refresh_token':r_token  
         }, message=SUCCESS['login'])
@@ -52,9 +52,9 @@ class AuthView(ViewSet):
         data = request.data.copy()
         data_save = UserSerializer(data=data)
         if not data_save.is_valid():
-            return validate_error(data_save.errors)
+            return validate_error(request, data_save.errors)
         data_save.save()
-        return response_data(data_save.data)
+        return response_data(request, data_save.data)
         
     # ham lam moi session
     def refresh_token(self, request):
@@ -62,12 +62,12 @@ class AuthView(ViewSet):
         
         validate = RefreshTokenValidate(data=data)
         if not validate.is_valid():
-            return validate_error(validate.errors)
+            return validate_error(request, validate.errors)
         
         # kiem tra refresh token cu
         redis_data = cache.get(data['refresh_token'])
         if redis_data is None:
-            return response_data(
+            return response_data(request, 
                 status=STATUS['INPUT_INVALID'],
                 message=ERROR['refresh_token']
             )
@@ -87,7 +87,7 @@ class AuthView(ViewSet):
             r_token = r_token, 
             data = redis_data
         )
-        return response_data({
+        return response_data(request, {
             'access_token': a_token,
             'refresh_token':r_token  
         }, message=SUCCESS['refresh_token'])
@@ -98,7 +98,7 @@ class AuthView(ViewSet):
         a_token = a_token.replace(vs.TOKEN['type'], '')
         r_token = cache.get(a_token)
         self.delete_token(a_token, r_token)
-        return response_data()
+        return response_data(request, )
         
     
     # duoi day la ham not request
@@ -162,7 +162,7 @@ class AuthView(ViewSet):
         data = data.replace(vs.TOKEN['type'], '')
         a = cache.get(data)
         b = cache.get(a)
-        return response_data({
+        return response_data(request, {
             'a':a,
             'b':b
         })

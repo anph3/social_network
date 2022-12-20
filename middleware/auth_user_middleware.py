@@ -23,11 +23,11 @@ class AuthUserMiddleware:
         header_token = request.headers.get('Authorization')
         
         if header_token is None:
-            return json_response(status=STATUS['NOT_LOGIN'], message=ERROR['not_login'])
+            return json_response(request, status=STATUS['NOT_LOGIN'], message=ERROR['not_login'])
         
         header_token = header_token.replace(vs.TOKEN['type'], '')
         if not cache.has_key(header_token):
-            return json_response(status=STATUS['TOKEN_EXPIRED'], message=ERROR['access_token'])
+            return json_response(request, status=STATUS['TOKEN_EXPIRED'], message=ERROR['access_token'])
         
         # redis_data = cache.get(token) 
         return self.get_response(request)
