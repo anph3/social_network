@@ -2,6 +2,7 @@ from celery import shared_task
 from configs import variable_system as vs
 from api_app.serializers.logger_serializer import *
 from social_network.celery import app
+from django.core.cache import cache
 
 # celery -A social_network beat -l INFO
 # celery -A social_network worker -l INFO
