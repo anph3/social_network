@@ -11,18 +11,25 @@ from social_network.celery import app
     retry_kwargs=vs.CELERY_QUEUE['retry_task']
 )
 def add_logger(
-    user=None,
-    method="",
-    event="",
-    input="",
-    output=""
-):
+    headers = None,
+    body = '',
+    method = '',
+    path = '',
+    output = ''
+): 
+    id = None
+    if headers is not None:
+        headers = headers.replace(vs.TOKEN['type'], '')
+        a_token = cache.get(headers)
+        r_token = cache.get(a_token)
+        id = r_token['id']
+        
     data = {
-        'user':user,
-        'method':method,
-        'event':event,
-        'input':input,
-        'output':output
+        'user':id,
+        'method':str(method),
+        'event':str(path),
+        'input':str(body),
+        'output':str(output)
     }
     
     data_save = LoggerSerializer(data=data)

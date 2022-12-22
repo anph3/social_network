@@ -3,16 +3,25 @@ from configs.variable_response import *
 from django.http import *
 from console.jobs import queue_logger as lg
 from math import ceil
+from django.urls import resolve
 
 def data_response(request, data=None, status=1, message='Success'):
     
-    
-    
-    return {
+    data = {
         'status_code': status,
         'message': message,
         'data': data
     }
+    
+    lg.add_logger.apply_async(kwargs={
+        'headers':request.headers.get('Authorization'),
+        'body': request.data.copy(),
+        'method': request.method,
+        'path': resolve(request.path_info).url_name,
+        'output':data
+    })
+    
+    return data
 
 def response_data(request, data=None, status=1, message='Success'):
     return Response(data_response(request, data, status, message))

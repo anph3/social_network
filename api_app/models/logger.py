@@ -9,4 +9,4 @@ class Logger(models.Model):
     event = models.CharField(max_length=255)
     input = models.CharField(max_length=255)
     output = models.CharField()
-    event_time = models.DateTimeField()
+    event_time = models.DateTimeField(auto_now_add=True)
