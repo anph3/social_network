@@ -90,7 +90,8 @@ REST_FRAMEWORK = {
 
 MIDDLEWARE = sys_conf.MIDDLEWARE
 
-ROOT_URLCONF = 'api_app.urls'
+# ROOT_URLCONF = 'api_app.urls'
+ROOT_URLCONF = 'mini_game.urls'
 
 TEMPLATES = [
     {

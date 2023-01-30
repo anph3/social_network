@@ -4,6 +4,11 @@ api_app/serializers/__pycache__/
 api_app/views/__pycache__/
 api_app/validations/__pycache__/
 api_app/mails/__pycache__/
+mini_game/__pycache__/
+mini_game/models/__pycache__/
+mini_game/views/__pycache__/
+mini_game/serializers/__pycache__/
+mini_game/validations/__pycache__/
 helpers/__pycache__/
 middleware/__pycache__/
 configs/__pycache__/
