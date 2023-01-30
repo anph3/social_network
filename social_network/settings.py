@@ -30,7 +30,27 @@ SECRET_KEY = 'django-insecure-e76#g*9-w+$i9hn@*r+xy^^@253fp*@+ahs2ebhpwu$5_x^x(g
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = sys_conf.DEBUG
 
-ALLOWED_HOSTS = sys_conf.ALLOWED_HOSTS
+ALLOWED_HOSTS = ['*']
+
+DATE_FORMAT = '%d-%m-%Y'
+
+DATETIME_FORMAT = '%d-%m-%Y %H:%M:%S'
+
+DATE_INPUT_FORMATS = [
+    '%d/%m/%Y',
+    '%Y-%m-%d',
+    '%d-%m-%Y',
+    '%Y/%m/%d'
+]
+
+DATETIME_INPUT_FORMATS = [
+    '%Y-%m-%d %H:%M:%S',
+    '%Y/%m/%d %H:%M:%S',
+    '%d-%m-%Y %H:%M:%S',
+    '%d/%m/%Y %H:%M:%S'
+]
+
+DEFAULT_THROTTLE_USER = '1/3s'
 
 
 # Application definition
@@ -47,11 +67,30 @@ INSTALLED_APPS = [
     'drf_yasg'
 ]
 
-REST_FRAMEWORK = sys_conf.REST_FRAMEWORK
+REST_FRAMEWORK = {
+    'DATE_FORMAT': DATE_FORMAT,
+    'DATETIME_FORMAT': DATETIME_FORMAT,
+    'DATE_INPUT_FORMATS': DATE_INPUT_FORMATS,
+    'DATETIME_INPUT_FORMATS': DATETIME_INPUT_FORMATS,
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    ],
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.JSONParser',
+        'rest_framework.parsers.MultiPartParser',
+        'rest_framework.parsers.FormParser'
+    ],
+    'DEFAULT_THROTTLE_CLASSES': sys_conf.DEFAULT_THROTTLE_CLASSES,
+    'DEFAULT_THROTTLE_RATES': {
+        'user': DEFAULT_THROTTLE_USER
+    },
+
+}
 
 MIDDLEWARE = sys_conf.MIDDLEWARE
 
-ROOT_URLCONF = sys_conf.ROOT_URLCONF
+ROOT_URLCONF = 'api_app.urls'
 
 TEMPLATES = [
     {

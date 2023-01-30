@@ -1,33 +1,16 @@
 from decouple import config
 
-ALLOWED_HOSTS = ['*']
-
 DEBUG = True
 
-ROOT_URLCONF = 'api_app.urls'
-
-DATE_FORMAT = '%d-%m-%Y'
-
-DATETIME_FORMAT = '%d-%m-%Y %H:%M:%S'
-
-DATE_INPUT_FORMATS = [
-    '%d/%m/%Y',
-    '%Y-%m-%d',
-    '%d-%m-%Y',
-    '%Y/%m/%d'
-]
-
-DATETIME_INPUT_FORMATS = [
-    '%Y-%m-%d %H:%M:%S',
-    '%Y/%m/%d %H:%M:%S',
-    '%d-%m-%Y %H:%M:%S',
-    '%d/%m/%Y %H:%M:%S'
-]
 
 MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'middleware.auth_user_middleware.AuthUserMiddleware',
+]
+
+DEFAULT_THROTTLE_CLASSES = [
+    'middleware.throttling.ExtendedRateThrottle'
 ]
 
 TEMPLATES_DIRS = []
