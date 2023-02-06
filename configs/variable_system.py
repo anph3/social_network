@@ -18,6 +18,5 @@ TOKEN = {
 
 GROUP_URL = {
     'url_swagger',
-    'url_auth',
-    'url_test',
+    'url_game',
 }

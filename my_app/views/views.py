@@ -18,17 +18,19 @@ from datetime import datetime
 
 # ============== include user * ==============
 #               configs
-from configs.variable_response import *
-from configs.variable_system import *
+from configs import variable_response as vr
+from configs import variable_system as vs
 #               helpers
 from helpers.response import *
 from helpers.helper import *
 #               validations
-from ..validations.auth_validate import *
-from ..validations.user_validate import *
-from ..validations.file_validate import *
+# from ..validations.auth_validate import *
+# from ..validations.user_validate import *
+# from ..validations.file_validate import *
+#               models
+from ..models.game import Game
 #               serializers
-from ..serializers.user_serializer import *
+from ..serializers.game_serializer import GameSerializer
 #               paginations
 from ..paginations import *
 # =============== end include  ===============

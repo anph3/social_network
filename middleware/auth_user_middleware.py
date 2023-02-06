@@ -4,7 +4,7 @@ from configs.variable_response import *
 from configs.variable_system import *
 from django.core.cache import cache
 from helpers.response import *
-from api_app import urls
+from my_app import urls
 from django.urls import resolve
 
 class AuthUserMiddleware:

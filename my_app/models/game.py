@@ -1,12 +1,12 @@
 from django.db import models
 
-class User(models.Model):
+class Game(models.Model):
     class Meta:
-        db_table = 'user'
+        db_table = 'game'
     id = models.BigAutoField(primary_key=True)
-    username = models.CharField(max_length=255)
-    email = models.CharField(max_length=255)
-    password = models.CharField(max_length=255)
+    game_name = models.CharField(max_length=255)
+    key = models.CharField(max_length=255)
+    status = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     deleted_at = models.DateTimeField()

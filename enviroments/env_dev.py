@@ -18,7 +18,7 @@ TEMPLATES_DIRS = []
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', 
-        'NAME': 'social_network',
+        'NAME': 'my_project',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': 'localhost',
