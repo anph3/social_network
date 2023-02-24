@@ -25,6 +25,7 @@ DATETIME_INPUT_FORMATS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'middleware.auth_user_middleware.AuthUserMiddleware',

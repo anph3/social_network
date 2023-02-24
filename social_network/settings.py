@@ -32,6 +32,7 @@ DEBUG = sys_conf.DEBUG
 
 ALLOWED_HOSTS = sys_conf.ALLOWED_HOSTS
 
+CORS_ORIGIN_ALLOW_ALL = True
 
 # Application definition
 
@@ -44,7 +45,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'api_app',
     'celery',
-    'drf_yasg'
+    'drf_yasg',
+    'corsheaders'
 ]
 
 REST_FRAMEWORK = sys_conf.REST_FRAMEWORK

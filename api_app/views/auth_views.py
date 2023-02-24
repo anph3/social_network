@@ -1,8 +1,10 @@
 from .views import *
+from drf_yasg.utils import swagger_auto_schema
 
 class AuthView(ViewSet):
     
     # ham dang nhap
+    @swagger_auto_schema(operation_description="partial_update description override",request_body=LoginValidate)
     def login(self, request):
         data = request.data.copy()
 
@@ -48,6 +50,7 @@ class AuthView(ViewSet):
         }, message=SUCCESS['login'])
 
     # ham create user or register
+    @swagger_auto_schema(operation_description="partial_update description override",request_body=UserSerializer)
     def register(self, request):
         data = request.data.copy()
         data_save = UserSerializer(data=data)
